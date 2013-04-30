@@ -32,9 +32,10 @@ import java.util.Random;
  */
 class RandomClusterNodeSelector implements ClusterNodeSelector {
 
+    private static final Random random = new Random();
+
     @Override
     public String selectNode(final String clusterName, final String[] connectedNodes, final String[] availableNodes) {
-        final Random random = new Random();
         // check if there are any connected nodes. If there are then just reuse them
         if (connectedNodes.length > 0) {
             if (connectedNodes.length == 1) {

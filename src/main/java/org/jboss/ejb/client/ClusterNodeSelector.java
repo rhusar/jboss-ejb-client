@@ -44,7 +44,7 @@ public interface ClusterNodeSelector {
      *                            been established. This can be an empty array but will not be null.
      * @param totalAvailableNodes Total available nodes in the cluster. This even includes the connected nodes.
      *                            This array will neither be empty nor null.
-     * @return
+     * @return                    Name of the target node to be used for EJB invocation.
      */
     String selectNode(final String clusterName, final String[] connectedNodes, final String[] totalAvailableNodes);
 }
