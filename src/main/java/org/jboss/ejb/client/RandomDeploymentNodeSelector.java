@@ -22,10 +22,10 @@
 
 package org.jboss.ejb.client;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * A {@link DeploymentNodeSelector} which {@link Random randomly} selects a node name from the eligible nodes
+ * A {@link DeploymentNodeSelector} which {@link ThreadLocalRandom randomly} selects a node name from the eligible nodes.
  *
  * @author Jaikiran Pai
  */
@@ -36,8 +36,7 @@ class RandomDeploymentNodeSelector implements DeploymentNodeSelector {
         if (eligibleNodes.length == 1) {
             return eligibleNodes[0];
         }
-        final Random random = new Random();
-        final int randomSelection = random.nextInt(eligibleNodes.length);
+        final int randomSelection = ThreadLocalRandom.current().nextInt(eligibleNodes.length);
         return eligibleNodes[randomSelection];
     }
 }

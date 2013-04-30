@@ -22,25 +22,23 @@
 
 package org.jboss.ejb.client;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * A {@link ClusterNodeSelector} which {@link Random randomly} selects one of the nodes from either the
- * connected nodes or available non-connected nodes
+ * A {@link ClusterNodeSelector} which {@link ThreadLocalRandom randomly} selects one of the nodes from either the
+ * connected nodes or available non-connected nodes.
  *
  * @author Jaikiran Pai
  */
 class RandomClusterNodeSelector implements ClusterNodeSelector {
-
     @Override
     public String selectNode(final String clusterName, final String[] connectedNodes, final String[] availableNodes) {
-        final Random random = new Random();
         // check if there are any connected nodes. If there are then just reuse them
         if (connectedNodes.length > 0) {
             if (connectedNodes.length == 1) {
                 return connectedNodes[0];
             }
-            final int randomConnectedNode = random.nextInt(connectedNodes.length);
+            final int randomConnectedNode = ThreadLocalRandom.current().nextInt(connectedNodes.length);
             return connectedNodes[randomConnectedNode];
         }
         // there are no connected nodes. so use the available nodes and let the cluster context
@@ -48,7 +46,7 @@ class RandomClusterNodeSelector implements ClusterNodeSelector {
         if (availableNodes.length == 1) {
             return availableNodes[0];
         }
-        final int randomSelection = random.nextInt(availableNodes.length);
+        final int randomSelection = ThreadLocalRandom.current().nextInt(availableNodes.length);
         return availableNodes[randomSelection];
     }
 }
